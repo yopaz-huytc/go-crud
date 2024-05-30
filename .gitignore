@@ -18,10 +18,11 @@
 # vendor/
 
 # Go workspace file
-go.work
-go.work.sum
+#go.work
+#go.work.sum
 
 node_modules
 .idea
 .env
 uploads
+Dockerfile
