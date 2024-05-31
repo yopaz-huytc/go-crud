@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    container_name: go-app-crud
+    env_file:
+      - .env
+    ports:
+      - "3333:3333"
+    volumes:
+      - .:/usr/src/app
+    command: air ./cmd/main.go -b 0.0.0.0
+    depends_on:
+      - mysql
+
+  mysql:
+    image: mysql:8.0
+    container_name: go-app-db
+    environment:
+      MYSQL_ROOT_PASSWORD: "${DB_PASS}"
+      MYSQL_DATABASE: "${DB_NAME}"
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./docker/data/db:/var/lib/mysql
+    ports:
+      - "3305:3306"
+
+volumes:
+    mysql-db:
